@@ -19,11 +19,17 @@ int main() {
     std::string field;
     // Getting the number of nodes
     getline(fin, field);
+    while (field.empty()) { // Skip empty lines
+        getline(fin, field);
+    }
     std::cout << "Field: " << field << std::endl;
     int numNodes = stoi(field);
     // Creating the nodes
     for (int i = 0; i < numNodes; ++i) {
         getline(fin, field);
+        while (field.empty()) { // Skip empty lines
+            getline(fin, field);
+        }
         std::cout << field << std::endl;
         theGraph.addNode(new Vertex(field));
     }
