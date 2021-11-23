@@ -1,0 +1,7 @@
+Breadth first - Use a queue
+Depth first - Use a stack
+
+stack:
+
+visit list:
+d,c,b,e,a
