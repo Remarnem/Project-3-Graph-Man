@@ -1,7 +1,7 @@
 // Graph.h
 // Joshua Steege
 // Section 2
-// Last modified: 11/22/2021
+// Last modified: 11/23/2021
 
 #ifndef PROJECT_3_GRAPH_MAN_GRAPH_H
 #define PROJECT_3_GRAPH_MAN_GRAPH_H
@@ -14,6 +14,7 @@ class Graph {
 private:
     std::vector<Vertex*> nodes;
     std::vector<Edge*> edges;
+    static bool containsNode(std::vector<Edge*> *edgeList, Vertex *node);
 public:
     void addNode(Vertex *newNode);
     void addEdge(Edge *newEdge);

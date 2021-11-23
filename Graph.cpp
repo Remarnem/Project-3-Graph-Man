@@ -31,3 +31,40 @@ void Graph::addEdge(Edge *newEdge) {
     // Edge doesn't already exist
     edges.push_back(newEdge);
 }
+// Prints Adjacency Matrix
+void Graph::printAdjacency() {
+    std::cout << std::endl;
+    // Printing first line
+    std::cout << " ";
+    for (Vertex *node : nodes) {
+        std::cout << node->getName() << " ";
+    }
+    std::cout << std::endl;
+    // Printing node lines
+    for (Vertex *node : nodes) {
+        std::cout << node->getName() << " ";
+        for (Vertex *node2 : nodes) {
+            if (node == node2) { // Nodes are the same
+                std::cout << "0 ";
+            } else if (containsNode(node->getEdgeList(), node2)) {
+                // An edge in node leads to an edge in node2
+                std::cout << "1 ";
+            } else {
+                // No edge in node leads to node2
+                std::cout << "0 ";
+            }
+        }
+    }
+}
+
+bool Graph::containsNode(std::vector<Edge *> *edgeList, Vertex *node) {
+    // Check if any edge leads to the given node
+    for (Edge *edge : *edgeList) {
+        if (edge->getDestination() == node) { // Edge leads to node
+            return true;
+        }
+    }
+    // No edge found
+    return false;
+}
+
