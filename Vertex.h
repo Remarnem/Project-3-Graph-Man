@@ -1,7 +1,7 @@
 // Vertex.h
 // Joshua Steege
 // Section 2
-// Last modified: 11/22/2021
+// Last modified: 11/27/2021
 
 #ifndef PROJECT_3_GRAPH_MAN_VERTEX_H
 #define PROJECT_3_GRAPH_MAN_VERTEX_H
@@ -17,7 +17,7 @@ private:
     std::vector<Edge*> outEdges;
 public:
     Vertex();
-    Vertex(std::string &Name);
+    Vertex(std::string Name);
     const std::string &getName() const;
     void setName(const std::string &name);
     std::vector<Edge*> *getEdgeList();

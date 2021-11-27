@@ -6,7 +6,7 @@
 #include "Edge.h"
 
 // Constructor with default parameters
-Edge::Edge(std::string &Name, Vertex *Source, Vertex *Destination, int Weight) : name(Name), weight(Weight) {
+Edge::Edge(std::string Name, Vertex *Source, Vertex *Destination, int Weight) : name(Name), weight(Weight) {
     source = Source;
     destination = Destination;
 }

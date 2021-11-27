@@ -18,7 +18,7 @@ private:
     Vertex *destination;
     int weight;
 public:
-    Edge(std::string &Name, Vertex* Source = nullptr, Vertex* Destination = nullptr, int Weight = 1);
+    Edge(std::string Name, Vertex* Source = nullptr, Vertex* Destination = nullptr, int Weight = 1);
     const std::string &getName() const;
     void setName(const std::string &name);
     Vertex *getSource() const;

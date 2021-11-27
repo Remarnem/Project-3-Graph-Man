@@ -1,7 +1,7 @@
 // Vertex.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 11/22/2021
+// Last modified: 11/27/2021
 
 #include "Vertex.h"
 
@@ -11,7 +11,7 @@ Vertex::Vertex() {
 
 }
 // Constructor with node name
-Vertex::Vertex(std::string &Name) {
+Vertex::Vertex(std::string Name) {
     name = Name;
 }
 // Getter for node name
