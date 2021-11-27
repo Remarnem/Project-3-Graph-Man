@@ -1,7 +1,7 @@
 // Graph.h
 // Joshua Steege
 // Section 2
-// Last modified: 11/23/2021
+// Last modified: 11/27/2021
 
 #ifndef PROJECT_3_GRAPH_MAN_GRAPH_H
 #define PROJECT_3_GRAPH_MAN_GRAPH_H
@@ -18,6 +18,7 @@ private:
 public:
     void addNode(Vertex *newNode);
     void addEdge(Edge *newEdge);
+    void addEdge(std::string source, const std::string& destination, int weight);
     void printAdjacency();
     Vertex* breadthFirstSearch(std::string &NodeName);
     Vertex* depthFirstSearch(std::string &NodeName);

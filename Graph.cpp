@@ -1,7 +1,7 @@
 // Graph.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 11/23/2021
+// Last modified: 11/27/2021
 
 #include <iostream>
 #include "Graph.h"
@@ -29,13 +29,37 @@ void Graph::addEdge(Edge *newEdge) {
         }
     }
     // Edge doesn't already exist
+    // Add edge to graph edge list
     edges.push_back(newEdge);
+    // Add edge to source node
+    newEdge->getSource()->getEdgeList()->push_back(newEdge);
+}
+// Add edge function for loading from a file
+void Graph::addEdge(std::string source, const std::string& destination, int weight) {
+    // Variables to store node addresses
+    Vertex *sourceNode = nullptr;
+    Vertex *destinationNode = nullptr;
+    for (Vertex *node : nodes) {
+        if (sourceNode != nullptr && destinationNode != nullptr) {
+            break;
+        } else if (node->getName() == source) {
+            sourceNode = node;
+        } else if (node->getName() == destination) {
+            destinationNode = node;
+        }
+    }
+    // Checking source & destination are actual nodes
+    if (sourceNode != nullptr && destinationNode != nullptr) {
+        addEdge(new Edge(source.append(destination), sourceNode, destinationNode, weight));
+    } else {
+        std::cout << "One or more vertices couldn't be found for this edge!" << std::endl;
+    }
 }
 // Prints Adjacency Matrix
 void Graph::printAdjacency() {
-    std::cout << std::endl;
+    std::cout << std::endl << "Adjacency matrix:" << std::endl;
     // Printing first line
-    std::cout << " ";
+    std::cout << "  ";
     for (Vertex *node : nodes) {
         std::cout << node->getName() << " ";
     }
@@ -54,10 +78,11 @@ void Graph::printAdjacency() {
                 std::cout << "0 ";
             }
         }
+        std::cout << std::endl;
     }
 }
-
-bool Graph::containsNode(std::vector<Edge *> *edgeList, Vertex *node) {
+// Checks if a given edge list has any edge that leads to the passed node
+bool Graph::containsNode(std::vector<Edge*> *edgeList, Vertex *node) {
     // Check if any edge leads to the given node
     for (Edge *edge : *edgeList) {
         if (edge->getDestination() == node) { // Edge leads to node
@@ -67,4 +92,3 @@ bool Graph::containsNode(std::vector<Edge *> *edgeList, Vertex *node) {
     // No edge found
     return false;
 }
-
