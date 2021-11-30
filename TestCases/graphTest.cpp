@@ -53,6 +53,7 @@ int main() {
 
     std::string search = "e";
     std::cout << "Search result: " << testGraph.breadthFirstSearch(search)->getName() << std::endl;
+    std::cout << "Search result: " << testGraph.depthFirstSearch(search)->getName() << std::endl;
 
     //TODO: Finish graph test case
 

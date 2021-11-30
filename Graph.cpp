@@ -102,11 +102,28 @@ void Graph::printNodes() {
     // Deletes the comma at the end
     std::cout << '\b' << '\b' << " " << std::endl;
 }
-// Prompts user for input if no starting node is given
+// Function to get the address of a node from the command line
+Vertex *Graph::getNode() {
+    // Variables for selecting starting node
+    std::string selection;
+    // Loops until a valid input is given
+    while (true) {
+        // Prompts the user to pick a node to start from
+        std::cout << "Pick a starting node: ";
+        printNodes();
+        std::cin >> selection;
+        for (Vertex *node : nodes) {
+            if (node->getName() == selection) {
+                return node;
+            }
+        }
+    }
+}
+// Prompts user for input if no starting node is given for breadth first search
 Vertex *Graph::breadthFirstSearch(std::string &NodeName) {
     return breadthFirstSearch(NodeName, getNode());
 }
-// Breadth first search function
+// Performs a breadth first search for a node with the NodeName starting from StartNode
 Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
     std::queue<Vertex*> queue;
     queue.emplace(StartNode);
@@ -121,6 +138,7 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Get next node to process
         Vertex *node = queue.front();
         queue.pop();
+        //std::cout << "Visiting: " << node->getName() << std::endl;
         // Check if this is node we're searching for
         if (node->getName() == NodeName) {
             return node;
@@ -144,40 +162,86 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         }
     }
 }
-// Function to get the address of a node from the command line
-Vertex *Graph::getNode() {
-    // Variables for selecting starting node
-    std::string selection;
-    // Loops until a valid input is given
+// Prompts user for input if no starting node is given for depth first search
+Vertex *Graph::depthFirstSearch(std::string &NodeName) {
+    return depthFirstSearch(NodeName, getNode());
+}
+// Performs a depth first search for a node with the NodeName starting from StartNode
+Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    std::stack<Vertex*> stack;
+    stack.push(StartNode);
+    std::vector<Vertex*> visited;
+    // Loop until value found
     while (true) {
-        // Prompts the user to pick a node to start from
-        std::cout << "Pick a starting node: ";
-        printNodes();
-        std::cin >> selection;
-        for (Vertex *node : nodes) {
-            if (node->getName() == selection) {
-                return node;
+        // Check if stack is empty
+        if (stack.empty()) {
+            // Target node couldn't be found.
+            return nullptr;
+        }
+        // Get next node to process
+        Vertex *node = stack.top();
+        stack.pop();
+        std::cout << "Visiting: " << node->getName() << std::endl;
+        // Check if this is node we're searching for
+        if (node->getName() == NodeName) {
+            return node;
+        }
+        // Check if node has been visited before
+        for (Vertex *visitedNode : visited) {
+            // Skips to the next loop iteration if node has been visited before
+            if (node == visitedNode) continue;
+        }
+        // Count node as visited
+        visited.push_back(node);
+        // Add nodes to stack
+        for (Edge *edge : *node->getEdgeList()) {
+            // Checks if destination has been visited
+            for (Vertex *visitedNode : visited) {
+                // Adds destination node if it hasn't been visited yet
+                if (edge->getDestination() != visitedNode) {
+                    stack.push(edge->getDestination());
+                }
             }
         }
     }
 }
-
-Vertex *Graph::depthFirstSearch(std::string &NodeName) {
-    return depthFirstSearch(NodeName, getNode());
-}
-
-Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
-    //TODO: Finish depth first search implementation
-
-}
-
+// Prompts user for input if no starting node is given for ordered depth first search
 Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName) {
     return orderedDepthFirstSearch(NodeName, getNode());
 }
-
+// Performs a depth first search for a node with the NodeName starting from StartNode
+// And prioritizing nodes with a smaller degree first
 Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode) {
-    // TODO: Finish ordered depth first search
-    // Prioritize nodes with smaller degree first
-    // Use getEdgeList().size() for degree
+    std::stack<Vertex*> stack;
+    stack.push(StartNode);
+    std::vector<Vertex*> visited;
+    // Loop until value found
+    while (true) {
+        // Check if stack is empty
+        if (stack.empty()) {
+            // Target node couldn't be found.
+            return nullptr;
+        }
+        // Get next node to process
+        Vertex *node = stack.top();
+        stack.pop();
+        std::cout << "Visiting: " << node->getName() << std::endl;
+        // Check if this is node we're searching for
+        if (node->getName() == NodeName) {
+            return node;
+        }
+        // Check if node has been visited before
+        for (Vertex *visitedNode : visited) {
+            // Skips to the next loop iteration if node has been visited before
+            if (node == visitedNode) continue;
+        }
+        // Count node as visited
+        visited.push_back(node);
+        // Add nodes to stack
+        
+        // TODO: Finish ordered depth first search
+        // Visit nodes with smaller degree first
+        // Use getEdgeList().size() for degree
+    }
 }
 
