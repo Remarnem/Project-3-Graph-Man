@@ -63,4 +63,6 @@ void loadGraph(Graph *theGraph, const std::string& fileLocation) {
             theGraph->addEdge(source, destination, std::stoi(weight));
         }
     }
+    std::cout << "Nodes: ";
+    theGraph->printNodes();
 }

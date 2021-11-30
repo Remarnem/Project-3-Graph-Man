@@ -1,7 +1,7 @@
 // Graph.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 11/27/2021
+// Last modified: 11/30/2021
 
 #include <iostream>
 #include "Graph.h"
@@ -91,4 +91,12 @@ bool Graph::containsNode(std::vector<Edge*> *edgeList, Vertex *node) {
     }
     // No edge found
     return false;
+}
+// Prints a list of all the node names
+void Graph::printNodes() {
+    for (Vertex *node : nodes) {
+        std::cout << node->getName() << ", ";
+    }
+    // Deletes the comma at the end
+    std::cout << '\b' << '\b' << " " << std::endl;
 }
