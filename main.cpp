@@ -1,7 +1,7 @@
 // main.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 11/27/2021
+// Last modified: 11/30/2021
 
 #define INFILE "../graph.txt"
 
@@ -18,7 +18,6 @@ int main() {
     // Loading the file's data to the graph
     loadGraph(&theGraph, INFILE);
 
-    theGraph.printAdjacency();
 
     return 0;
 }
@@ -27,7 +26,7 @@ int main() {
 void loadGraph(Graph *theGraph, const std::string& fileLocation) {
     // Opening file
     std::fstream fin;
-    fin.open(INFILE, std::ios::in);
+    fin.open(fileLocation, std::ios::in);
     // Creating line to store txt input
     std::string line;
     // Getting the number of nodes
@@ -35,7 +34,6 @@ void loadGraph(Graph *theGraph, const std::string& fileLocation) {
     while (line.empty()) { // Skip empty lines
         getline(fin, line);
     }
-    //std::cout << "Line: " << line << std::endl;
     int numNodes = stoi(line);
     // Creating the nodes
     for (int i = 0; i < numNodes; ++i) {
@@ -43,7 +41,6 @@ void loadGraph(Graph *theGraph, const std::string& fileLocation) {
         while (line.empty()) { // Skip empty lines
             getline(fin, line);
         }
-        //std::cout << line << std::endl;
         theGraph->addNode(new Vertex(line));
     }
     // Creating the edges
@@ -63,6 +60,4 @@ void loadGraph(Graph *theGraph, const std::string& fileLocation) {
             theGraph->addEdge(source, destination, std::stoi(weight));
         }
     }
-    std::cout << "Nodes: ";
-    theGraph->printNodes();
 }
