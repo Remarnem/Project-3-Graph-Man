@@ -238,10 +238,31 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
         // Count node as visited
         visited.push_back(node);
         // Add nodes to stack
-        
+        std::vector<Vertex*> childNodes;
+        // Adding the destinations you can reach from node to the childNodes vector
+        for (Edge *edge : *node->getEdgeList()) {
+            childNodes.push_back(edge->getDestination());
+        }
+        // Control variable for while loop
+        int largest[2]; // first value is largest degree, 2nd value is index
+        while (!childNodes.empty()) {
+            // Initializing
+            largest[0] = -1;
+            // Get index of node w/ highest degree
+            for (int i = 0; i < childNodes.size(); ++i) {
+                // See if node has new highest degree
+                if (childNodes[i]->getEdgeList()->size() >= largest[0]) {
+                    largest[0] = childNodes[i]->getEdgeList()->size();
+                    largest[1] = i;
+                }
+            }
+            std::cout << "Test" << std::endl;
+            // Adds the node with the largest degree to the stack
+            stack.push(childNodes[largest[1]]); // TODO: Fix crash on this line
+            // Removes the node that was just added to the stack from the childNodes vector
+            childNodes.erase(childNodes.begin() + largest[1]);
+        } // All child nodes have been added to the stack with the smallest degree on top
         // TODO: Finish ordered depth first search
-        // Visit nodes with smaller degree first
-        // Use getEdgeList().size() for degree
     }
 }
 
