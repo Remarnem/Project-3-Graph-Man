@@ -25,6 +25,9 @@ public:
     Vertex *breadthFirstSearch(std::string &NodeName);
     static Vertex *breadthFirstSearch(std::string &NodeName, Vertex *StartNode);
     Vertex* depthFirstSearch(std::string &NodeName);
+    Vertex* depthFirstSearch(std::string &NodeName, Vertex *StartNode);
+    Vertex* orderedDepthFirstSearch(std::string &NodeName);
+    Vertex* orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode);
 };
 
 

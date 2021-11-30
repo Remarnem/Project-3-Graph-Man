@@ -162,3 +162,22 @@ Vertex *Graph::getNode() {
     }
 }
 
+Vertex *Graph::depthFirstSearch(std::string &NodeName) {
+    return depthFirstSearch(NodeName, getNode());
+}
+
+Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    //TODO: Finish depth first search implementation
+
+}
+
+Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName) {
+    return orderedDepthFirstSearch(NodeName, getNode());
+}
+
+Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    // TODO: Finish ordered depth first search
+    // Prioritize nodes with smaller degree first
+    // Use getEdgeList().size() for degree
+}
+
