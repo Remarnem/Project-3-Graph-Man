@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include "Graph.h"
+#include <stack>
+#include <queue>
 
 // Adds a node to the graph if it doesn't already exist
 void Graph::addNode(Vertex *newNode) {
@@ -100,3 +102,63 @@ void Graph::printNodes() {
     // Deletes the comma at the end
     std::cout << '\b' << '\b' << " " << std::endl;
 }
+// Prompts user for input if no starting node is given
+Vertex *Graph::breadthFirstSearch(std::string &NodeName) {
+    return breadthFirstSearch(NodeName, getNode());
+}
+// Breadth first search function
+Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    std::queue<Vertex*> queue;
+    queue.emplace(StartNode);
+    std::vector<Vertex*> visited;
+    // Loop until value found
+    while (true) {
+        // Check if queue is empty
+        if (queue.empty()) {
+            // Target node couldn't be found.
+            return nullptr;
+        }
+        // Get next node to process
+        Vertex *node = queue.front();
+        queue.pop();
+        // Check if this is node we're searching for
+        if (node->getName() == NodeName) {
+            return node;
+        }
+        // Check if node has been visited before
+        for (Vertex *visitedNode : visited) {
+            // Skips to the next loop iteration if node has been visited before
+            if (node == visitedNode) continue;
+        }
+        // Count node as visited
+        visited.push_back(node);
+        // Add all subsequent nodes to queue
+        for (Edge *edge : *node->getEdgeList()) {
+            // Checks if destination has been visited
+            for (Vertex *visitedNode : visited) {
+                // Adds destination node if it hasn't been visited yet
+                if (edge->getDestination() != visitedNode) {
+                    queue.emplace(edge->getDestination());
+                }
+            }
+        }
+    }
+}
+// Function to get the address of a node from the command line
+Vertex *Graph::getNode() {
+    // Variables for selecting starting node
+    std::string selection;
+    // Loops until a valid input is given
+    while (true) {
+        // Prompts the user to pick a node to start from
+        std::cout << "Pick a starting node: ";
+        printNodes();
+        std::cin >> selection;
+        for (Vertex *node : nodes) {
+            if (node->getName() == selection) {
+                return node;
+            }
+        }
+    }
+}
+

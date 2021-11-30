@@ -21,7 +21,9 @@ public:
     void addEdge(std::string source, const std::string& destination, int weight);
     void printNodes();
     void printAdjacency();
-    Vertex* breadthFirstSearch(std::string &NodeName);
+    Vertex *getNode();
+    Vertex *breadthFirstSearch(std::string &NodeName);
+    static Vertex *breadthFirstSearch(std::string &NodeName, Vertex *StartNode);
     Vertex* depthFirstSearch(std::string &NodeName);
 };
 
