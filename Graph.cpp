@@ -247,7 +247,8 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
         int largest[2]; // first value is largest degree, 2nd value is index
         while (!childNodes.empty()) {
             // Initializing
-            largest[0] = -1;
+            largest[0] = 0;
+            largest[1] = 0;
             // Get index of node w/ highest degree
             for (int i = 0; i < childNodes.size(); ++i) {
                 // See if node has new highest degree
@@ -256,13 +257,11 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
                     largest[1] = i;
                 }
             }
-            std::cout << "Test" << std::endl;
             // Adds the node with the largest degree to the stack
-            stack.push(childNodes[largest[1]]); // TODO: Fix crash on this line
+            stack.push(childNodes[largest[1]]);
             // Removes the node that was just added to the stack from the childNodes vector
             childNodes.erase(childNodes.begin() + largest[1]);
         } // All child nodes have been added to the stack with the smallest degree on top
-        // TODO: Finish ordered depth first search
     }
 }
 
