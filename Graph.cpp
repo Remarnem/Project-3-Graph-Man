@@ -1,7 +1,7 @@
 // Graph.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 11/30/2021
+// Last modified: 12/1/2021
 
 #include <iostream>
 #include "Graph.h"
@@ -263,5 +263,68 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
             childNodes.erase(childNodes.begin() + largest[1]);
         } // All child nodes have been added to the stack with the smallest degree on top
     }
+}
+// Finds the shortest path between two nodes
+void Graph::shortestPath(Vertex *source, Vertex *destination) {
+    // Checking nodes aren't null
+    if (source == nullptr || destination == nullptr) {
+        std::cout << "Invalid source or destination nodes." << std::endl;
+        return;
+    }
+    /*
+    // Creating variables to store data
+    auto *pathWeights = new uint32_t[nodes.size()];
+    for (auto i = 0; i < nodes.size(); i++) {
+        pathWeights[i] = UINT32_MAX;
+    }
+    auto *paths = new std::vector<Vertex*>[nodes.size()];
+    // Initializing variables
+    for (auto i = 0; i < nodes.size(); i++) {
+        for (Edge *edge : *source->getEdgeList()) {
+            // Storing what nodes the source leads to
+            if (edge->getDestination() == nodes[i]) {
+                // Adds value if there's a 1 length path from source to that node
+                pathWeights[i] = edge->getWeight();
+                paths[i].push_back(source);
+            }
+        }
+    }
+    // Calculating shortest path
+    Vertex *node = source;
+    int pathIndex = -1;
+    uint32_t currentWeight = 0;
+    bool done = false;
+    while (!done) {
+        for (auto i = 0; i < nodes.size(); i++) {
+            for (Edge *edge: *node->getEdgeList()) {
+                // Storing what nodes the source leads to
+                if (edge->getDestination() == nodes[i] && currentWeight + edge->getWeight() < pathWeights[i]) {
+                    // Edge leads to the given node and the weight is less than the currently stored path
+                    pathWeights[i] = edge->getWeight() + currentWeight;
+                    paths[i].clear();
+                    if (i != -1) paths[i] = paths[pathIndex];
+                    paths[i].push_back(node);
+                }
+            }
+        }
+        //TODO:
+        uint32_t bestWeight = UINT32_MAX;
+        for (auto i = 0; i < nodes.size(); i++) {
+            if (pathWeights[i] >= currentWeight && pathWeights[i] <= bestWeight)
+            done = true;
+        }
+    }
+    */
+    // Stores the index of nodes that points to the source
+    int sourceIndex;
+    // Getting the index of the source node
+    for (auto i = 0; i < nodes.size(); i++) {
+        if (nodes[i] == source) {
+            sourceIndex = i;
+            break;
+        }
+    }
+    
+
 }
 

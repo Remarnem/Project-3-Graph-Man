@@ -1,7 +1,7 @@
 // Graph.h
 // Joshua Steege
 // Section 2
-// Last modified: 11/30/2021
+// Last modified: 12/1/2021
 
 #ifndef PROJECT_3_GRAPH_MAN_GRAPH_H
 #define PROJECT_3_GRAPH_MAN_GRAPH_H
@@ -28,6 +28,7 @@ public:
     static Vertex* depthFirstSearch(std::string &NodeName, Vertex *StartNode);
     Vertex* orderedDepthFirstSearch(std::string &NodeName);
     static Vertex* orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode);
+    void shortestPath(Vertex *source, Vertex *destination);
 };
 
 
