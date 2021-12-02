@@ -1,7 +1,7 @@
 // Graph.h
 // Joshua Steege
 // Section 2
-// Last modified: 12/1/2021
+// Last modified: 12/2/2021
 
 #ifndef PROJECT_3_GRAPH_MAN_GRAPH_H
 #define PROJECT_3_GRAPH_MAN_GRAPH_H
@@ -20,15 +20,17 @@ public:
     void addEdge(Edge *newEdge);
     void addEdge(std::string source, const std::string& destination, int weight);
     void printNodes();
-    void printAdjacency();
+    void printAdjacencyMatrix();
+    void printAdjacencyList();
     Vertex *getNode();
+    Vertex *getNode(const std::string &nodeName);
     Vertex *breadthFirstSearch(std::string &NodeName);
     static Vertex *breadthFirstSearch(std::string &NodeName, Vertex *StartNode);
     Vertex* depthFirstSearch(std::string &NodeName);
     static Vertex* depthFirstSearch(std::string &NodeName, Vertex *StartNode);
     Vertex* orderedDepthFirstSearch(std::string &NodeName);
     static Vertex* orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode);
-    void shortestPath(Vertex *source, Vertex *destination);
+    std::vector<Vertex *> shortestPath(Vertex *source, Vertex *destination);
 };
 
 

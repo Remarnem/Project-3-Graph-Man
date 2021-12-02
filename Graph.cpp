@@ -1,7 +1,7 @@
 // Graph.cpp
 // Joshua Steege
 // Section 2
-// Last modified: 12/1/2021
+// Last modified: 12/2/2021
 
 #include <iostream>
 #include "Graph.h"
@@ -58,8 +58,8 @@ void Graph::addEdge(std::string source, const std::string& destination, int weig
     }
 }
 // Prints Adjacency Matrix
-void Graph::printAdjacency() {
-    std::cout << std::endl << "Adjacency matrix:" << std::endl;
+void Graph::printAdjacencyMatrix() {
+    std::cout << "Adjacency matrix:" << std::endl;
     // Printing first line
     std::cout << "  ";
     for (Vertex *node : nodes) {
@@ -83,6 +83,19 @@ void Graph::printAdjacency() {
         std::cout << std::endl;
     }
 }
+// Prints adjacency list
+void Graph::printAdjacencyList() {
+    // Iterating through each node
+    for (Vertex *node : nodes) {
+        // Printing node name
+        std::cout << node->getName();
+        // Iterating through all edges a node has
+        for (Edge *edge : *node->getEdgeList()) {
+            std::cout << " -> " << edge->getDestination()->getName();
+        }
+        std::cout << std::endl;
+    }
+}
 // Checks if a given edge list has any edge that leads to the passed node
 bool Graph::containsNode(std::vector<Edge*> *edgeList, Vertex *node) {
     // Check if any edge leads to the given node
@@ -100,7 +113,7 @@ void Graph::printNodes() {
         std::cout << node->getName() << ", ";
     }
     // Deletes the comma at the end
-    std::cout << '\b' << '\b' << " " << std::endl;
+    std::cout << "\b\b " << std::endl;
 }
 // Function to get the address of a node from the command line
 Vertex *Graph::getNode() {
@@ -118,6 +131,15 @@ Vertex *Graph::getNode() {
             }
         }
     }
+}
+// Function that converts a node name to it's address
+Vertex *Graph::getNode(const std::string& nodeName) {
+    for (Vertex *node : nodes) {
+        if (node->getName() == nodeName) {
+            return node;
+        }
+    }
+    return nullptr;
 }
 // Prompts user for input if no starting node is given for breadth first search
 Vertex *Graph::breadthFirstSearch(std::string &NodeName) {
@@ -138,7 +160,7 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Get next node to process
         Vertex *node = queue.front();
         queue.pop();
-        //std::cout << "Visiting: " << node->getName() << std::endl;
+        std::cout << "Visiting: " << node->getName() << std::endl;
         // Check if this is node we're searching for
         if (node->getName() == NodeName) {
             return node;
@@ -265,66 +287,100 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
     }
 }
 // Finds the shortest path between two nodes
-void Graph::shortestPath(Vertex *source, Vertex *destination) {
+std::vector<Vertex *> Graph::shortestPath(Vertex *source, Vertex *destination) {
     // Checking nodes aren't null
     if (source == nullptr || destination == nullptr) {
         std::cout << "Invalid source or destination nodes." << std::endl;
-        return;
+        return *(new std::vector<Vertex *>);
     }
-    /*
-    // Creating variables to store data
+    // Vector to store visited nodes
+    std::vector<Vertex*> visited;
+    // Array of vectors to store the paths to each node
+    auto *paths = new std::vector<Vertex*>[nodes.size()];
+    // Array to store cost of path to a node
     auto *pathWeights = new uint32_t[nodes.size()];
+    // Initializing path weights to 'infinity'
     for (auto i = 0; i < nodes.size(); i++) {
         pathWeights[i] = UINT32_MAX;
     }
-    auto *paths = new std::vector<Vertex*>[nodes.size()];
-    // Initializing variables
-    for (auto i = 0; i < nodes.size(); i++) {
-        for (Edge *edge : *source->getEdgeList()) {
-            // Storing what nodes the source leads to
-            if (edge->getDestination() == nodes[i]) {
-                // Adds value if there's a 1 length path from source to that node
-                pathWeights[i] = edge->getWeight();
-                paths[i].push_back(source);
-            }
-        }
-    }
     // Calculating shortest path
-    Vertex *node = source;
-    int pathIndex = -1;
-    uint32_t currentWeight = 0;
-    bool done = false;
-    while (!done) {
-        for (auto i = 0; i < nodes.size(); i++) {
-            for (Edge *edge: *node->getEdgeList()) {
-                // Storing what nodes the source leads to
-                if (edge->getDestination() == nodes[i] && currentWeight + edge->getWeight() < pathWeights[i]) {
-                    // Edge leads to the given node and the weight is less than the currently stored path
-                    pathWeights[i] = edge->getWeight() + currentWeight;
-                    paths[i].clear();
-                    if (i != -1) paths[i] = paths[pathIndex];
-                    paths[i].push_back(node);
-                }
-            }
-        }
-        //TODO:
-        uint32_t bestWeight = UINT32_MAX;
-        for (auto i = 0; i < nodes.size(); i++) {
-            if (pathWeights[i] >= currentWeight && pathWeights[i] <= bestWeight)
-            done = true;
-        }
-    }
-    */
-    // Stores the index of nodes that points to the source
-    int sourceIndex;
+    // Variable to store the node we're currently searching from
+    Vertex *currentNode = source;
+    // Variable to store the index of the node in the paths and pathWeights arrays as well as the nodes vector
+    int pathIndex;
     // Getting the index of the source node
     for (auto i = 0; i < nodes.size(); i++) {
         if (nodes[i] == source) {
-            sourceIndex = i;
+            pathIndex = i;
             break;
         }
     }
-    
+    uint32_t currentWeight = 0;
+    while (true) {
+        // Iterate through all nodes in the graph
+        for (auto i = 0; i < nodes.size(); i++) {
+            // Iterate through all out edges for the current node
+            for (Edge *edge: *currentNode->getEdgeList()) {
+                // Checking if the current edge leads to a given node
+                if (edge->getDestination() == nodes[i]) {
+                    // Checking if the new weight would be less than the old one
+                    if ( currentWeight + edge->getWeight() < pathWeights[i]) {
+                        // Clearing old path to node
+                        paths[i].clear();
+                        // Updating the path weight
+                        pathWeights[i] = edge->getWeight() + currentWeight;
+                        // Copying the path to this node
+                        paths[i] = paths[pathIndex];
+                        // Adding the node itself to the end of its path
+                        paths[i].push_back(currentNode);
+                    }
+                }
+            }
+        }
+        // Adding the current node to the visited list
+        visited.push_back(currentNode);
+        // Checking if all nodes have been visited
+        if (visited.size() == nodes.size()) {
+            break;
+        }
+        // Reusing currentWeight to find the node with the next lowest cost
+        currentWeight = UINT32_MAX;
+        // Setting currentNode to the unvisited node with the lowest cost
+        for (auto i = 0; i < nodes.size(); i++) {
+            bool beenVisited = false;
+            // Checking if node has been visited already
+            for (Vertex *node : visited) {
+                if (nodes[i] == node) {
+                    // Node has been visited, reusing bool and breaking loop
+                    beenVisited = true;
+                    break;
+                }
+            }
+            // If node has been visited skips to the next loop iteration
+            if (beenVisited) {
+                continue;
+            }
+            // Checking if the node has the lowest remaining cost to reach
+            if (pathWeights[i] <= currentWeight) {
+                // Updating currentWeight with the lowest cost
+                currentWeight = pathWeights[i];
+                // Saving the node's index
+                pathIndex = i;
+            }
+        }
+        // The index for the node with the next lowest cost is stored in pathIndex
+        // Getting address for the new current node
+        currentNode = nodes[pathIndex];
+        // If the next node to process paths from is the destination, return path;
+        if (currentNode == destination) {
+            // Adding destination to the end of the path
+            paths[pathIndex].push_back(destination);
+            std::cout << "Cost: " << currentWeight << std::endl;
+            return paths[pathIndex];
+        }
+    }
+
 
 }
+
 
