@@ -147,6 +147,11 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName) {
 }
 // Performs a breadth first search for a node with the NodeName starting from StartNode
 Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    // Checking if StartNode is nullptr
+    if (StartNode == nullptr) {
+        std::cout << "StartNode cannot be null." << std::endl;
+        return nullptr;
+    }
     std::queue<Vertex*> queue;
     queue.emplace(StartNode);
     std::vector<Vertex*> visited;
@@ -155,6 +160,7 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Check if queue is empty
         if (queue.empty()) {
             // Target node couldn't be found.
+            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
             return nullptr;
         }
         // Get next node to process
@@ -190,6 +196,11 @@ Vertex *Graph::depthFirstSearch(std::string &NodeName) {
 }
 // Performs a depth first search for a node with the NodeName starting from StartNode
 Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    // Checking if StartNode is nullptr
+    if (StartNode == nullptr) {
+        std::cout << "StartNode cannot be null." << std::endl;
+        return nullptr;
+    }
     std::stack<Vertex*> stack;
     stack.push(StartNode);
     std::vector<Vertex*> visited;
@@ -198,6 +209,7 @@ Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Check if stack is empty
         if (stack.empty()) {
             // Target node couldn't be found.
+            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
             return nullptr;
         }
         // Get next node to process
@@ -234,6 +246,11 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName) {
 // Performs a depth first search for a node with the NodeName starting from StartNode
 // And prioritizing nodes with a smaller degree first
 Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode) {
+    // Checking if StartNode is nullptr
+    if (StartNode == nullptr) {
+        std::cout << "StartNode cannot be null." << std::endl;
+        return nullptr;
+    }
     std::stack<Vertex*> stack;
     stack.push(StartNode);
     std::vector<Vertex*> visited;
@@ -242,6 +259,7 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
         // Check if stack is empty
         if (stack.empty()) {
             // Target node couldn't be found.
+            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
             return nullptr;
         }
         // Get next node to process
