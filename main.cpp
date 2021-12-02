@@ -46,25 +46,19 @@ int main() {
                 break;
             case 3:
                 // Making variables local
-                for (int i = 0; i < 1; ++i) {
+                if (true) {
                     // Path variable for shortestPath()
-                    std::vector<Vertex*> path = theGraph.shortestPath(theGraph.getNode(), theGraph.getNode());
-                    // Calculate the path cost
-                    int cost = 0;
-                    for (auto i = 0; i < path.size()-1; i++) {
-                        for (Edge *edge : *path[i]->getEdgeList()) {
-                            if (edge->getDestination() == path[i+1]) {
-                                cost += edge->getWeight();
-                            }
-                        }
-                    }
+                    std::cout << "Start node: " << std::endl;
+                    Vertex* source = theGraph.getNode();
+                    std::cout << "Destination node: " << std::endl;
+                    Vertex* destination = theGraph.getNode();
+                    std::vector<Vertex*> path = theGraph.shortestPath(source, destination);
                     // Print shortest path between two nodes
                     std::cout << "Path: ";
                     for (Vertex *node : path) {
                         std::cout << node->getName() << ", ";
                     }
                     std::cout << "\b\b " << std::endl;
-                    std::cout << "Cost: " << cost << std::endl;
                 }
                 break;
             case 4:
@@ -72,10 +66,13 @@ int main() {
                 std::cout << "Nodes: ";
                 theGraph.printNodes();
                 std::cout << "Enter a node to search for:" << std::endl;
-                for (auto i = 0; i < 1; i++) {
+                // Making variables local
+                if (true) {
                     std::string input;
                     std::cin >> input;
-                    std::cout << "Search result: " << Graph::breadthFirstSearch(input, theGraph.getNode())->getName() << std::endl;
+                    Vertex *result = Graph::breadthFirstSearch(input, theGraph.getNode());
+                    if (result == nullptr) break;
+                    std::cout << "Search result: " << result->getName() << std::endl;
                 }
                 break;
             case 5:
@@ -83,10 +80,13 @@ int main() {
                 std::cout << "Nodes: ";
                 theGraph.printNodes();
                 std::cout << "Enter a node to search for:" << std::endl;
-                for (auto i = 0; i < 1; i++) {
+                // Making variables local
+                if (true) {
                     std::string input;
                     std::cin >> input;
-                    std::cout << "Search result: " << Graph::depthFirstSearch(input, theGraph.getNode())->getName() << std::endl;
+                    Vertex *result = Graph::depthFirstSearch(input, theGraph.getNode());
+                    if (result == nullptr) break;
+                    std::cout << "Search result: " << result->getName() << std::endl;
                 }
                 break;
             case 6:
@@ -94,10 +94,13 @@ int main() {
                 std::cout << "Nodes: ";
                 theGraph.printNodes();
                 std::cout << "Enter a node to search for:" << std::endl;
-                for (auto i = 0; i < 1; i++) {
+                // Making variables local
+                if (true) {
                     std::string input;
                     std::cin >> input;
-                    std::cout << "Search result: " << Graph::orderedDepthFirstSearch(input, theGraph.getNode())->getName() << std::endl;
+                    Vertex *result = Graph::orderedDepthFirstSearch(input, theGraph.getNode());
+                    if (result == nullptr) break;
+                    std::cout << "Search result: " << result->getName() << std::endl;
                 }
                 break;
             default:
@@ -109,6 +112,7 @@ int main() {
 
     return 0;
 }
+
 
 // Loads the data from the file to the graph
 void loadGraph(Graph *theGraph, const std::string& fileLocation) {

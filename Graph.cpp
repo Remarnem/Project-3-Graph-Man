@@ -91,7 +91,7 @@ void Graph::printAdjacencyList() {
         std::cout << node->getName();
         // Iterating through all edges a node has
         for (Edge *edge : *node->getEdgeList()) {
-            std::cout << " -> " << edge->getDestination()->getName();
+            std::cout << " -> " << edge->getDestination()->getName() << ",F" << edge->getWeight();
         }
         std::cout << std::endl;
     }
@@ -160,7 +160,7 @@ Vertex *Graph::breadthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Check if queue is empty
         if (queue.empty()) {
             // Target node couldn't be found.
-            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
+            std::cout << "Couldn't find \'" << NodeName << "\' starting from " << StartNode->getName() << "\'" << std::endl;
             return nullptr;
         }
         // Get next node to process
@@ -209,7 +209,7 @@ Vertex *Graph::depthFirstSearch(std::string &NodeName, Vertex *StartNode) {
         // Check if stack is empty
         if (stack.empty()) {
             // Target node couldn't be found.
-            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
+            std::cout << "Couldn't find \'" << NodeName << "\' starting from \'" << StartNode->getName() << "\'" << std::endl;
             return nullptr;
         }
         // Get next node to process
@@ -259,7 +259,7 @@ Vertex *Graph::orderedDepthFirstSearch(std::string &NodeName, Vertex *StartNode)
         // Check if stack is empty
         if (stack.empty()) {
             // Target node couldn't be found.
-            std::cout << "Couldn't find " << NodeName << " starting from" << StartNode->getName() << std::endl;
+            std::cout << "Couldn't find \'" << NodeName << "\' starting from \'" << StartNode->getName() << "\'" << std::endl;
             return nullptr;
         }
         // Get next node to process
