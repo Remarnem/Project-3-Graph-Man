@@ -91,7 +91,7 @@ void Graph::printAdjacencyList() {
         std::cout << node->getName();
         // Iterating through all edges a node has
         for (Edge *edge : *node->getEdgeList()) {
-            std::cout << " -> " << edge->getDestination()->getName() << ",F" << edge->getWeight();
+            std::cout << " -> " << edge->getDestination()->getName() << "," << edge->getWeight();
         }
         std::cout << std::endl;
     }
